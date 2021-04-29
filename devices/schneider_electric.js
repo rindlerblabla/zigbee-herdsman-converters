@@ -55,6 +55,20 @@ module.exports = [
         },
     },
     {
+        zigbeeModel: ['NHROTARY/DIMMER/1'],
+        model: 'WDE002334',
+        vendor: 'Schneider Electric',
+        description: 'Rotary dimmer',
+        extend: extend.light_onoff_brightness(),
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
+            const endpoint = device.getEndpoint(3);
+            await reporting.bind(endpoint, coordinatorEndpoint, ['genOnOff', 'genLevelCtrl']);
+            await reporting.onOff(endpoint);
+            await reporting.brightness(endpoint);
+        },
+    },
+    {
         zigbeeModel: ['PUCK/DIMMER/1'],
         model: 'CCT5010-0001',
         vendor: 'Schneider Electric',
